@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление семьи</title>
+    <style>
+        .qqq {
+            width: 500px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Добавление семьи</h1>
+
+<p>Ключ семьи</p>
+<input id = "keyField" type = "text" class = "qqq">
+
+<br>
+<br>
+
+<p>JSON строка - содержимое семьи</p>
+<input id = "familyField" type = "text" class = "qqq">
+
+<br>
+<br>
+
+<button id = "btn">Добавить семью</button>
+
+<script>
+    function sendPost(url, body, callback) {
+        let r = new XMLHttpRequest();
+        r.open("POST", url, true);
+        r.withCredentials = true;
+        r.send(body);
+        r.onreadystatechange = function() {
+            if(r.readyState === 4 && r.status === 200) {
+                const answer = r.responseText;
+                r = null;
+                callback(answer);
+            }
+        }
+    }
+
+    window.onload = function() {
+        document.getElementById("btn").onclick = function() {
+            const key = document.getElementById("keyField").value + "";
+            const family = document.getElementById("familyField").value + "";
+            const obj = {
+                key: key,
+                family: family,
+            }
+            const objString = JSON.stringify(obj);
+            sendPost("/add", objString, function(answer) {
+                alert(answer);
+            });
+        }
+    }
+</script>
+    
+</body>
+</html>
