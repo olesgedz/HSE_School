@@ -13,6 +13,7 @@ let Chaincode = class {
     return shim.success();
   }
 
+  // функция для приема и вызова метода класса
   async Invoke(stub) {
     let ret = stub.getFunctionAndParameters();
     console.info(ret);
@@ -33,110 +34,68 @@ let Chaincode = class {
     }
   }
 
+  // метод для получения массива ключей
+  async getKeysArr(stub, args) {
+	  // из блокчейна беру массив ключей в виде байтовой строки
+	  const arrBuffer = await stub.getState("ARR");
+	  // преобразую байтовую строку в обычную строку
+	  const arrString = arrBuffer.toString();
+	  // отправляю массив в формате JSON клиенту
+	  return getResult(arrString);
+  }
+
+  // инициализация
   async initLedger(stub, args) {
-    let DB = {
-		students: [],
-		marks: [],
-	};
-    await stub.putState('DB', Buffer.from(JSON.stringify(DB)));
-    return getResult("INIT_DATABASE_OK");
+	  // создаем пустой массив ключей
+	  const arr = [];
+	  // преобразуем массив в строку
+	  const arrString = JSON.stringify(arr);
+	  // сохраняем массив в формате байтовой строки в блокчейе
+	  await stub.putState('ARR', Buffer.from(arrString));
+	  // отправляем ответ клиенту об успешном создании массива ключей
+	  return getResult("CREATE_EMPTY_ARRAY_OF_KEYS_OK");
   }
   
-  async addMark(stub, args) {
-	  const studentId = (args[0] + "").toString();
-	  const markValue = (args[1] + "").toString();
-	  
-	  let value = await stub.getState('DB');
-	  value = value.toString();
-	  let DB = JSON.parse(value);
-	  
-	  let studentSurname = undefined;
-	  
-	  let studentAlreadyExists = false;
-	  for(let i = 0; i < DB.students.length; i++) {
-		const student = DB.students[i];
-		if(student.studentId.toString() === studentId.toString()) {
-			studentAlreadyExists = true;
-			studentSurname = student.studentSurname.toString();
-			break;
-		}
-	  }
-	 
-	  if(studentAlreadyExists === false) {
-	 	 throw new Error("STUDENT_NOT_FOUND");
-	  }
-	 
-	  let mark = {
-	  	  studentId: studentId.toString(),
-		  studentSurname: studentSurname.toString(),
-		  markValue: markValue.toString(),
-	  }
-	 
-	  DB.marks.push(mark);
-	 
-	  await stub.putState('DB', Buffer.from(JSON.stringify(DB)));
-	 
-	  return getResult("ADDING_MARK_OK");
-  }
-  
-  async hello(stub, args) {
-	  return getResult("HELLO_FROM_MY_FABRIC");
-  }
-  
-  async getAllMarks(stub, args) {
-	  let value = await stub.getState('DB');
-	  value = value.toString();
-	  let DB = JSON.parse(value);
-	  
-	  let marksArr = DB.marks;
-	  let marksArrString = JSON.stringify(marksArr);
-	  return getResult(marksArrString);
-  }
+  // добавление семьи в блокчейн и контроль существования семьи
+  async insertFamily(stub, args) {
+	  // получаю ключ и преобразую в обычную строку
+	  const key = (args[0] + "").toString();
+	  // получаю семью и преобразую в обычную строку
+	  const familyString = (args[1] + "").toString();
 
-  async addStudent(stub, args) {
-		const studentId = (args[0] + "").toString();
-		const studentSurname = (args[1] + "").toString();
-			
-	    let value = await stub.getState('DB');
-		value = value.toString();
-		let DB = JSON.parse(value);
-			
-		let studentAlreadyExists = false;
-		for(let i = 0; i < DB.students.length; i++) {
-			const student = DB.students[i];
-			if(student.studentId.toString() === studentId.toString()) {
-				studentAlreadyExists = true;
-				break;
-			}
-		}
-			
-		if(studentAlreadyExists === true) {
-			throw new Error("STUDENT_ALREADY_EXISTS");
-		}
-		
-		const student = {
-			studentId: studentId.toString(),
-			studentSurname: studentSurname.toString(),
-			rnd: Math.random(),
-		};
-			
-		DB.students.push(student);
+	  // из блокчейна беру массив ключей в виде байтовой строки
+	  const arrBuffer = await stub.getState("ARR");
+	  // преобразую байтовую строку в обычную строку
+	  let arrString = arrBuffer.toString();
+	  // преобразую строку в массив
+	  const arr = JSON.parse(arrString);
 
-		await stub.putState('DB', Buffer.from(JSON.stringify(DB)));
-		
-		return getResult("ADDING_STUDENT_OK");
+	  // ищу наличие ключа в массиве ключей
+	  for(let i = 0; i < arr.length; i++) {
+		  // если совпадение найдено
+		  if(arr[i] === key) {
+			// генерирую ошибку и завершаю работу программы
+			throw new Error("KEY_IS_ALREADY_EXISTS");
+		  }
+	  }
+
+	  // если мы дошли до этого места
+	  // то совпадения ключей НЕ было
+
+	  // добавляем ключ к концу массива
+	  arr.push(key);
+	  // преобразуем изменненый массив ключей в строку формата JSON
+	  arrString = JSON.stringify(arr);
+	  // кладем изменный массив в формате байтовой строки в блокчейн
+	  await stub.putState('ARR', Buffer.from(arrString));
+
+	  // кладем семью с ее ключем в блокчейе в формате строки байт
+	  await stub.putState(key, Buffer.from(familyString));
+
+	  // возвращаем ответ об успешной вставке семьи
+	  return getResult("CREATE_NEW_FAMILY_OK");
   }
   
-  async getAllStudents(stub, args) {
-	  let value = await stub.getState('DB');
-	  value = value.toString();
-	  let DB = JSON.parse(value);
-	  
-	  let studentsArr = DB.students;
-	  let studentsArrString = JSON.stringify(studentsArr);
-	  return getResult(studentsArrString);
-  }
-
 };
 
 shim.start(new Chaincode());
