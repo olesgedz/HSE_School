@@ -44,6 +44,29 @@ let Chaincode = class {
 	  return getResult(arrString);
   }
 
+
+
+    // метод для получения массива ключей
+	async getFamilyData(stub, args) {
+		// из блокчейна беру массив ключей в виде байтовой строки
+		const familyKey = (args[0] + "").toString();
+		const arrBuffer = await stub.getState("ARR");
+		// преобразую байтовую строку в обычную строку
+		const arrString = arrBuffer.toString();
+		const arr = JSON.parse(arrString);
+
+		// ищу наличие ключа в массиве ключей
+		for(let i = 0; i < arr.length; i++) {
+			// если совпадение найдено
+			if(arr[i] === familyKey) {
+			// генерирую ошибку и завершаю работу программы
+				return getResult(await stub.getState(arr[i]));
+			}
+		}
+		// отправляю массив в формате JSON клиенту
+		throw new Error("FAMILY_DATA_NOT_FOUND");
+
+	}
   // инициализация
   async initLedger(stub, args) {
 	  // создаем пустой массив ключей
