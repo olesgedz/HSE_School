@@ -7,6 +7,21 @@
 /*
  * Chaincode Invoke
  */
+ 
+ 
+////////////////////////////////////////////////////////////////
+const write = {};
+write.log = function(s) {};
+write.info = function(s) {};
+write.error = function(s) {};
+
+let OPERATION = process.argv[2].toString();
+let ARR = process.argv;
+ARR.splice(0,1);
+ARR.splice(0,1);
+ARR.splice(0,1);
+////////////////////////////////////////////////////////////////
+
 
 var Fabric_Client = require('fabric-client');
 var path = require('path');
@@ -26,7 +41,7 @@ channel.addOrderer(order);
 //
 var member_user = null;
 var store_path = path.join(__dirname, 'hfc-key-store');
-console.log('Store path:'+store_path);
+write.log('Store path:'+store_path);
 var tx_id = null;
 
 // create the key value store as defined in the fabric-client/config/default.json 'key-value-store' setting
@@ -45,7 +60,7 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 	return fabric_client.getUserContext('user1', true);
 }).then((user_from_store) => {
 	if (user_from_store && user_from_store.isEnrolled()) {
-		console.log('Successfully loaded user1 from persistence');
+		write.log('Successfully loaded user1 from persistence');
 		member_user = user_from_store;
 	} else {
 		throw new Error('Failed to get user1.... run registerUser.js');
@@ -53,7 +68,7 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 
 	// get a transaction id object based on the current user assigned to fabric client
 	tx_id = fabric_client.newTransactionID();
-	console.log("Assigning transaction_id: ", tx_id._transaction_id);
+	write.log("Assigning transaction_id: ", tx_id._transaction_id);
 
 	// createCar chaincode function - requires 5 args, ex: args: ['CAR12', 'Honda', 'Accord', 'Black', 'Tom'],
 	// changeCarOwner chaincode function - requires 2 args , ex: args: ['CAR10', 'Dave'],
@@ -61,8 +76,8 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 	var request = {
 		//targets: let default to the peer assigned to the client
 		chaincodeId: 'fabcar',
-		fcn: '',
-		args: [''],
+		fcn: OPERATION,
+		args: ARR,
 		chainId: 'mychannel',
 		txId: tx_id
 	};
@@ -76,12 +91,13 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 	if (proposalResponses && proposalResponses[0].response &&
 		proposalResponses[0].response.status === 200) {
 			isProposalGood = true;
-			console.log('Transaction proposal was good');
+			write.log('Transaction proposal was good');
+			console.log(proposalResponses[0].response.payload + "");
 		} else {
-			console.error('Transaction proposal was bad');
+			write.error('Transaction proposal was bad');
 		}
 	if (isProposalGood) {
-		console.log(util.format(
+		write.log(util.format(
 			'Successfully sent Proposal and received ProposalResponse: Status - %s, message - "%s"',
 			proposalResponses[0].response.status, proposalResponses[0].response.message));
 
@@ -121,10 +137,10 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 				// now let the application know what happened
 				var return_status = {event_status : code, tx_id : transaction_id_string};
 				if (code !== 'VALID') {
-					console.error('The transaction was invalid, code = ' + code);
+					write.error('The transaction was invalid, code = ' + code);
 					resolve(return_status); // we could use reject(new Error('Problem with the tranaction, event status ::'+code));
 				} else {
-					console.log('The transaction has been committed on peer ' + event_hub.getPeerAddr());
+					write.log('The transaction has been committed on peer ' + event_hub.getPeerAddr());
 					resolve(return_status);
 				}
 			}, (err) => {
@@ -140,23 +156,23 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 
 		return Promise.all(promises);
 	} else {
-		console.error('Failed to send Proposal or receive valid response. Response null or status is not 200. exiting...');
+		write.error('Failed to send Proposal or receive valid response. Response null or status is not 200. exiting...');
 		throw new Error('Failed to send Proposal or receive valid response. Response null or status is not 200. exiting...');
 	}
 }).then((results) => {
-	console.log('Send transaction promise and event listener promise have completed');
+	write.log('Send transaction promise and event listener promise have completed');
 	// check the results in the order the promises were added to the promise all list
 	if (results && results[0] && results[0].status === 'SUCCESS') {
-		console.log('Successfully sent transaction to the orderer.');
+		write.log('Successfully sent transaction to the orderer.');
 	} else {
-		console.error('Failed to order the transaction. Error code: ' + results[0].status);
+		write.error('Failed to order the transaction. Error code: ' + results[0].status);
 	}
 
 	if(results && results[1] && results[1].event_status === 'VALID') {
-		console.log('Successfully committed the change to the ledger by the peer');
+		write.log('Successfully committed the change to the ledger by the peer');
 	} else {
-		console.log('Transaction failed to be committed to the ledger due to ::'+results[1].event_status);
+		write.log('Transaction failed to be committed to the ledger due to ::'+results[1].event_status);
 	}
 }).catch((err) => {
-	console.error('Failed to invoke successfully :: ' + err);
+	write.error('Failed to invoke successfully :: ' + err);
 });

@@ -7,6 +7,21 @@
 /*
  * Chaincode query
  */
+ 
+ 
+////////////////////////////////////////////////////////////////
+const write = {};
+write.log = function(s) {};
+write.info = function(s) {};
+write.error = function(s) {};
+
+let OPERATION = process.argv[2].toString();
+let ARR = process.argv;
+ARR.splice(0,1);
+ARR.splice(0,1);
+ARR.splice(0,1);
+////////////////////////////////////////////////////////////////
+ 
 
 var Fabric_Client = require('fabric-client');
 var path = require('path');
@@ -24,7 +39,7 @@ channel.addPeer(peer);
 //
 var member_user = null;
 var store_path = path.join(__dirname, 'hfc-key-store');
-console.log('Store path:'+store_path);
+write.log('Store path:'+store_path);
 var tx_id = null;
 
 // create the key value store as defined in the fabric-client/config/default.json 'key-value-store' setting
@@ -43,7 +58,7 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 	return fabric_client.getUserContext('user1', true);
 }).then((user_from_store) => {
 	if (user_from_store && user_from_store.isEnrolled()) {
-		console.log('Successfully loaded user1 from persistence');
+		write.log('Successfully loaded user1 from persistence');
 		member_user = user_from_store;
 	} else {
 		throw new Error('Failed to get user1.... run registerUser.js');
@@ -54,24 +69,24 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 	const request = {
 		//targets : --- letting this default to the peers assigned to the channel
 		chaincodeId: 'fabcar',
-		fcn: 'queryAllCars',
-		args: ['']
+		fcn: OPERATION,
+		args: ARR
 	};
 
 	// send the query proposal to the peer
 	return channel.queryByChaincode(request);
 }).then((query_responses) => {
-	console.log("Query has completed, checking results");
+	write.log("Query has completed, checking results");
 	// query_responses could have more than one  results if there multiple peers were used as targets
 	if (query_responses && query_responses.length == 1) {
 		if (query_responses[0] instanceof Error) {
-			console.error("error from query = ", query_responses[0]);
+			write.error("error from query = ", query_responses[0]);
 		} else {
-			console.log("Response is ", query_responses[0].toString());
+			console.log(query_responses[0].toString());
 		}
 	} else {
-		console.log("No payloads were returned from query");
+		write.log("No payloads were returned from query");
 	}
 }).catch((err) => {
-	console.error('Failed to query successfully :: ' + err);
+	write.error('Failed to query successfully :: ' + err);
 });
