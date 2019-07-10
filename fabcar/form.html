@@ -3,32 +3,100 @@
 <head>
 	<meta charset="UTF-8">
 	<title>FORM</title>
-	<style>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<style>	
 		.inputField {
 			width: 500px;
-            padding: 5px;
+            padding: 1px;
+		}
+		.breaker{
+			background-color: #FFFFFF;
+   			height: 30px;
+		}
+		.middle {
+			width: 80%;
+			margin: 0 auto;
+    		box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
+		}
+		.head {
+			background: #2c2c2c;
+		}
+		.head p {
+			color: #FFFFFF;
+			font-size: 50px;
+			padding: 30px;
+		}
+		.fieldName {
+			background: #d1d405;
+		}
+		.fieldName p {
+			color: #2c2c2c;
+			font-size: 15px;
+			padding: 20px;
 		}
 	</style>
 </head>
 <body>
-	<h1>FORM PAGE</h1><br>
-	<h2>ФИО ребенка</h2><br>
-	<input id = "child" type = "text" class = "inputField"><br>
-	<h2>Адрес</h2><br>
-	<input id = "adress" type = "text" class = "inputField"><br>
-	<h2>Документы</h2><br>
-	<button id = "documents">Документы</button><br>
-	<h2>ФИО матери</h2><br>
-	<input id = "mother" type = "text" class = "inputField"><br>
-	<h2>Номер телефона матери</h2><br>
-	<input id = "mother_phone" type = "text" class = "inputField"><br>
-	<h2>ФИО отца</h2><br>
-	<input id = "father" type = "text" class = "inputField"><br>
-	<h2>Номер телефона отца</h2><br>
-	<input id = "father_phone" type = "text" class = "inputField"><br>
+	<div class = "middle">
+	<div class = "head"><p>FORM PAGE</p></div>
+	<div class = "breaker"></div>
 
+	<div class = "fieldName"><p>ФИО ребенка</p></div>	
+	<div class = "inputField">
+		<input id = "child" type = "text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+	</div>
 
-	<button id = "btn">SEND</button>
+	<div class = "p-3 mb-0 bg-warning text-dark" class = "test">Адрес</div>
+
+	<div class="input-group mb-0">
+		<input id = "adress" type = "text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+	</div>
+
+	<div class = "p-3 mb-0 bg-warning text-dark" class = "test">Документы</div>
+
+	<div class="input-group mb-0">
+		<input id = "show_documents" type = "text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+	</div>
+
+	<div class = "p-3 mb-0 bg-warning text-dark" class = "test">ФИО матери</div>
+
+	<div class="input-group mb-0">
+		<input id = "mother" type = "text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+	</div>
+
+	<div class = "p-3 mb-0 bg-warning text-dark" class = "test">Номер телефона матери</div>
+
+	<div class="input-group mb-0">
+		<input id = "mother_phone" type = "text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+	</div>
+
+	<div class = "p-3 mb-0 bg-warning text-dark" class = "test">ФИО отца</div>
+
+	<div class="input-group mb-0">
+		<input id = "father" type = "text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+	</div>
+
+	<div class = "p-3 mb-0 bg-warning text-dark" class = "test">Номер телефона отца</div>
+
+	<div class="input-group mb-0">
+		<input id = "father_phone" type = "text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+	</div>
+
+	<div id = "documents_form" hidden>
+		<input id = "show_passport" type = "button" value = "passport"/>
+		<div id = "passport_form" hidden>
+			<input id = "passport_serial" type = "text" value = "SERIAL" class = "inputField"><br>
+			<input id = "passport_number" type = "text" value = "NUMBER" class = "inputField"><br>	
+		</div>
+		<input id = "show_snils" type = "button" value = "snils"/>
+		<div id = "snils_form" hidden>
+			<input id = "snils_serial" type = "text" value = "SERIAL" class = "inputField"><br>	
+		</div>
+	</div>
+	<button id = "btn" class="btn btn-primary btn-sm" >SEND</button>
+	</div>
 	<script>
 		function sendPost(url, body, callback) {
 			let r = new XMLHttpRequest();
@@ -44,13 +112,32 @@
 			};
 		};
 		window.onload = function() {
+			document.getElementById("show_documents").onclick = function() {
+				let form = document.getElementById("documents_form");
+				form.hidden = !form.hidden;
+			}
+			document.getElementById("show_passport").onclick = function() {
+				let form = document.getElementById("passport_form");
+				form.hidden = !form.hidden;
+			}
+			document.getElementById("show_snils").onclick = function() {
+				let form = document.getElementById("snils_form");
+				form.hidden = !form.hidden;
+			}
 			document.getElementById("btn").onclick = function() {
+				let key_value = document.getElementById("child").value + "";
 				const obj = {
-					key: document.getElementById("child").value + "",
+					key: key_value,
 					value: {
-						name: key,
+						name: key_value,
 						adress: document.getElementById("adress").value + "",
-						documents: document.getElementById("documents").value + "",
+						documents: {
+							passport: {
+								ser: document.getElementById("passport_serial").value + "",
+								num: document.getElementById("passport_number").value + "",
+							},
+							snils: document.getElementById("snils_serial").value + "",
+						},
 						mother: document.getElementById("mother").value + "",
 						mother_phone: document.getElementById("mother_phone").value + "",
 						father: document.getElementById("father").value + "",
@@ -60,6 +147,8 @@
 				const objString = JSON.stringify(obj);
 				sendPost("/parce_form", objString, function(answer) {
 					alert(answer);
+					if (answer === "Информация уже существует")
+						window.location = "/main";
 				});
 			};
 		};

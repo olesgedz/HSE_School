@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Тестирование</title>
+	<style>
+		body {
+			font-family: Geneva, Arial, Helvetica, sans-serif;
+			margin: 50px;
+		}
+		
+		td {
+			padding: 5px;
+		}
+		
+		#box1 {
+			padding: 15px;
+			background: #CCCCCC;
+		}
+		
+		#box2 {
+			padding: 15px;
+			background: #CCCCCC;
+		}
+		
+		.field {
+			margin-left: 15px;
+			padding: 5px;
+			font-family: Geneva, Arial, Helvetica, sans-serif;
+			width: 300px;
+		}
+		
+		button {
+			font-family: Geneva, Arial, Helvetica, sans-serif;
+			padding: 7px;
+			width: 270px;
+		}
+	</style>
+</head>
+
+<body>
+
+<script>
+	function sendPost(url, body, callback) {
+        let r = new XMLHttpRequest();
+        r.open("POST", url, true);
+        r.withCredentials = true;
+        r.send(body);
+        r.onreadystatechange = function() {
+            if(r.readyState === 4 && r.status === 200) {
+                const answer = r.responseText;
+                r = null;
+                callback(answer);
+            }
+        }
+    }
+	
+	function printKeys(){
+		const key = "key";
+        const family = "family";
+		const obj = {
+                key: key,
+                family: family,
+		}
+		const objString = JSON.stringify(obj);
+		const box = document.getElementById("box1");
+
+		sendPost("/show_keys", objString, function(answer) {
+			const arr = JSON.parse(answer);
+			let ans = "<table border = '2px solid black'>";
+			ans = ans + "<tr><td>" + "<b>Данные ребёнка</b>" + "</td></tr>";
+			for(let i = 0; i < arr.length; i++) {
+				console.log(arr[i]);
+				ans = ans + "<tr><td>" + "<button>" + arr[i] + "</button>" + "</td></tr>";
+			}
+			ans += "</table>";
+			box.innerHTML = ans;
+		});
+	}
+</script>
+
+<hr>
+<br>
+
+<button onclick = "printKeys();">Получить список детей</button>
+<br>
+<br>
+<div id = "box1"></div>
+</body>
+</html>

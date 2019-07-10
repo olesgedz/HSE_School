@@ -4,7 +4,46 @@ const express = require("express");
 const app = express();
 const port = 5005;
 app.listen(port);
+<<<<<<< HEAD
 console.log("Port: " + port);
+=======
+console.log("Server works on port: " + port);
+
+app.get('/main', function(req, res) {
+	res.sendfile("main.html");
+});
+
+app.get("/watch", function(req, res) {
+	res.sendfile("keys.html");
+});
+
+app.get("/add", function(req, res) {
+	res.sendfile("form.html");
+});
+
+app.get("/aaa", function(req, res) {
+	res.sendfile("aaa.html");
+});
+
+app.post("/parce_form", function(req, res) {
+    let buffer = [];
+    req.on('data', (data) => {
+        buffer.push(data);
+    }).on('end', () => {
+        const bodyString = buffer.join("");
+        const bodyObj = JSON.parse(bodyString);
+		MakeInvoke("insertFamily", [bodyObj.key, JSON.stringify(bodyObj.value)], function(answer) {
+            //console.log(answer);
+            if (answer === "CREATE_NEW_FAMILY_OK") {
+                res.end("Информация добавлена успешно!");
+			}
+			else {
+                res.end("Информация уже существует");
+            };
+        });
+    });
+});
+>>>>>>> d6850d5cf724d7a5315223c7d41449a0dcc256f9
 
 app.get("/aaa", function(request, response) {
     response.sendfile("aaa.html");
@@ -91,7 +130,11 @@ function MakeInvoke(operation, argumentsArray, callback) {
             proposalResponses[0].response.status === 200) {
                 isProposalGood = true;
                 write.log('Transaction proposal was good');
+<<<<<<< HEAD
                 console.log("AAAAAA: " + proposalResponses[0].response.payload + "");
+=======
+//                console.log(proposalResponses[0].response.payload + "");
+>>>>>>> d6850d5cf724d7a5315223c7d41449a0dcc256f9
                 callback(proposalResponses[0].response.payload + "");
             } else {
                 callback("ERROR");
@@ -184,7 +227,7 @@ function MakeInvoke(operation, argumentsArray, callback) {
     });
 }
 
-app.post("/add", function(request, response) {
+app.post("/readbase", function(request, response) {
     let buffer = [];
     request.on('data', (data) => {
         buffer.push(data);
@@ -194,11 +237,12 @@ app.post("/add", function(request, response) {
         console.log("Post body:");
         console.log("Key: " + bodyObj.key);
         console.log("Family: " + bodyObj.family);
-        MakeInvoke("insertFamily", [bodyObj.key, bodyObj.family], function(answer) {
+        MakeInvoke("insertFamily", [bodyObj.key], function(answer) {
+            console.log(answer);
             if(answer === "ERROR")  {
-                response.end("Ошибка добавления семьи");
+                response.end("Ошибка в поиске семьи");
             } else {
-                response.end("Добавление успешно");
+                response.end(answer);
             }
         });
     });
@@ -218,8 +262,29 @@ app.post("/change", function(request, response) {
             if(answer === "ERROR")  {
                 response.end("Ошибка изменения иформации");
             } else {
+<<<<<<< HEAD
                 response.end("Изменение успешно");
             }
         });
     });
+=======
+                response.end("Изменения внесены успешно");
+            }
+        });
+    });
+});
+
+
+app.post("/show_keys", function(request, response) {
+    let buffer = [];
+    request.on('data', (data) => {
+        buffer.push(data);
+    }).on('end', () => {
+        const bodyString = buffer.join("");
+        const bodyObj = JSON.parse(bodyString);
+        MakeInvoke("showKeys", [bodyObj.key, bodyObj.family], function(answer) {
+                response.end(answer);
+        });
+    });
+>>>>>>> d6850d5cf724d7a5315223c7d41449a0dcc256f9
 });
