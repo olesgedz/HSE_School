@@ -43,6 +43,18 @@
         }
     }
 
+    function sendAjax(url, callback) {
+		const r = new XMLHttpRequest();
+		r.open("GET", url);
+		r.setRequestHeader("Content-Type","text/plain;charset=UTF-8");
+		r.send(null);
+		r.onreadystatechange = function() {
+			if(r.readyState === 4 && r.status === 200) {
+				callback(r.responseText + "");
+			}
+		}
+	}
+
     window.onload = function() {
         document.getElementById("btn").onclick = function() {
             const key = document.getElementById("keyField").value + "";
