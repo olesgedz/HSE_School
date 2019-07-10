@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>FORM</title>
+	<style>
+		.inputField {
+			width: 500px;
+            padding: 5px;
+		}
+	</style>
+</head>
+<body>
+	<h1>FORM PAGE</h1><br>
+	<h2>ФИО ребенка</h2><br>
+	<input id = "child" type = "text" class = "inputField"><br>
+	<h2>Адрес</h2><br>
+	<input id = "adress" type = "text" class = "inputField"><br>
+	<h2>Документы</h2><br>
+	<button id = "documents">Документы</button><br>
+	<h2>ФИО матери</h2><br>
+	<input id = "mother" type = "text" class = "inputField"><br>
+	<h2>Номер телефона матери</h2><br>
+	<input id = "mother_phone" type = "text" class = "inputField"><br>
+	<h2>ФИО отца</h2><br>
+	<input id = "father" type = "text" class = "inputField"><br>
+	<h2>Номер телефона отца</h2><br>
+	<input id = "father_phone" type = "text" class = "inputField"><br>
+
+
+	<button id = "btn">SEND</button>
+	<script>
+		function sendPost(url, body, callback) {
+			let r = new XMLHttpRequest();
+			r.open("POST", url, true);
+			r.withCredentials = true;
+			r.send(body);
+			r.onreadystatechange = function() {
+				if (r.readyState === 4 && r.status === 200) {
+					const answer = r.responseText;
+					r = null;
+					callback(answer);
+				};
+			};
+		};
+		window.onload = function() {
+			document.getElementById("btn").onclick = function() {
+				const obj = {
+					key: document.getElementById("child").value + "",
+					value: {
+						adress: document.getElementById("adress").value + "",
+						documents: document.getElementById("documents").value + "",
+						mother: document.getElementById("mother").value + "",
+						mother_phone: document.getElementById("mother_phone").value + "",
+						father: document.getElementById("father").value + "",
+						father_phone: document.getElementById("father_phone").value + "",
+					}
+				};
+				const objString = JSON.stringify(obj);
+				sendPost("/parce_form", objString, function(answer) {
+					alert(answer);
+				});
+			};
+		};
+	</script>
+</body>
+</html>
