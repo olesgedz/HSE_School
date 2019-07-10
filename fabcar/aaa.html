@@ -28,6 +28,8 @@
 
 <button id = "btn">Добавить семью</button>
 
+<button id = "btn1">Изменить информацию о семье</button>
+
 <script>
     function sendPost(url, body, callback) {
         let r = new XMLHttpRequest();
@@ -53,6 +55,18 @@
             }
             const objString = JSON.stringify(obj);
             sendPost("/add", objString, function(answer) {
+                alert(answer);
+            });
+        }
+        document.getElementById("btn1").onclick = function() {
+            const key = document.getElementById("keyField").value + "";
+            const family = document.getElementById("familyField").value + "";
+            const obj = {
+                key: key,
+                family: family,
+            }
+            const objString = JSON.stringify(obj);
+            sendPost("/change", objString, function(answer) {
                 alert(answer);
             });
         }

@@ -1,75 +1,13 @@
 "use strict";
 
-const execSync = require('child_process').execSync;
 const express = require("express");
 const app = express();
-
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-reqed-With, Content-Type, Accept");
-    res.header("Cache-Control", "no-cache, no-store, must-revalidate");
-    next();
-});
-
 const port = 5005;
 app.listen(port);
-console.log("Server works on port: " + port);
+console.log("Port: " + port);
 
-app.get('/main', function(req, res) {
-	res.sendfile("main.html");
-});
-
-app.get("/add", function(req, res) {
-	res.sendfile("form.html");
-});
-
-app.get("/aaa", function(req, res) {
-	res.sendfile("aaa.html");
-});
-
-app.post("/parce_form", function(req, res) {
-    let buffer = [];
-    req.on('data', (data) => {
-        buffer.push(data);
-    }).on('end', () => {
-        const bodyString = buffer.join("");
-        const bodyObj = JSON.parse(bodyString);
-		MakeInvoke("insertFamily", [bodyObj.key, JSON.stringify(bodyObj.value)], function(answer) {
-            //console.log(answer);
-            if (answer === "ERROR")  {
-                res.end("Ошибка добавления семьи");
-			}
-			else {
-                res.end("Добавление успешно");
-            };
-        });
-		res.end("Добавление успешно");
-    });
-});
-
-
-app.post("/add", function(request, response) {
-    let buffer = [];
-    request.on('data', (data) => {
-        buffer.push(data);
-    }).on('end', () => {
-        const bodyString = buffer.join("");
-        const bodyObj = JSON.parse(bodyString);
-        console.log("Post body:");
-        console.log("Key: " + bodyObj.key);
-        console.log("Family: " + bodyObj.family);
-        MakeInvoke("insertFamily", [bodyObj.key, bodyObj.family], function(answer) {
-            if(answer === "ERROR")  {
-                response.end("Ошибка добавления семьи");
-            } else {
-                response.end("Добавление успешно");
-            }
-        });
-    });
-});
-
-app.get("/readbase", function(request, response) {
-    response.sendfile("readbase.html");
+app.get("/aaa", function(request, response) {
+    response.sendfile("aaa.html");
 });
 
 function MakeInvoke(operation, argumentsArray, callback) {
@@ -153,7 +91,7 @@ function MakeInvoke(operation, argumentsArray, callback) {
             proposalResponses[0].response.status === 200) {
                 isProposalGood = true;
                 write.log('Transaction proposal was good');
-                console.log(proposalResponses[0].response.payload + "");
+                console.log("AAAAAA: " + proposalResponses[0].response.payload + "");
                 callback(proposalResponses[0].response.payload + "");
             } else {
                 callback("ERROR");
@@ -266,8 +204,7 @@ app.post("/add", function(request, response) {
     });
 });
 
-
-app.post("/readbase", function(request, response) {
+app.post("/change", function(request, response) {
     let buffer = [];
     request.on('data', (data) => {
         buffer.push(data);
@@ -277,12 +214,11 @@ app.post("/readbase", function(request, response) {
         console.log("Post body:");
         console.log("Key: " + bodyObj.key);
         console.log("Family: " + bodyObj.family);
-        MakeInvoke("insertFamily", [bodyObj.key], function(answer) {
-            console.log(answer);
+        MakeInvoke("applyInfoChange", [bodyObj.key, bodyObj.family], function(answer) {
             if(answer === "ERROR")  {
-                response.end("Ошибка в поиске семьи");
+                response.end("Ошибка изменения иформации");
             } else {
-                response.end(answer);
+                response.end("Изменение успешно");
             }
         });
     });
