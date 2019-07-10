@@ -32,6 +32,38 @@ let Chaincode = class {
     		return shim.error(err);
     	}
 	};
+
+	//меняет информацию о семье
+	async	 applyInfoChange(stub, args) {
+		const key = (args[0] + "").toString();
+		// получаю семью и преобразую в обычную строку
+		const familyString = (args[1] + "").toString();
+	
+		// кладем семью с ее ключем в блокчейе в формате строки байт
+		await stub.putState(key, Buffer.from(familyString));
+	
+		// возвращаем ответ об успешной вставке семьи
+		return getResult("INFO_CHANGE_APPLIED");
+	  }
+
+	  // достаёт информацию о семье 
+	  async	 getFamilyInfo(stub, args) {
+		const arrKeys = await stub.getState("ARR");
+		const arrKeyString = arrKeys.toString();
+		const arrKey = JSON.parse(arrKeyString);
+		const key = (args[0] + "").toString();
+	
+		for(let i = 0; i < arrKey.length; i++) {
+			if(arrKey[i] === key) {
+				const Buffer = await stub.getState(key);
+				const Str = Buffer.toString();
+				return getResult(Str);
+			}
+		}
+	
+		throw new Error("KEY_DOES_NOT_EXIST");
+	  }
+
 	// метод для получения массива ключей
 	async showKeys(stub, args) {
 		// из блокчейна беру массив ключей в виде байтовой строки
@@ -41,6 +73,26 @@ let Chaincode = class {
 		// отправляю массив в формате JSON клиенту
 		return getResult(arrString);
 	};
+
+	async getLedgerInfo(stub, args) {
+		const arrKeys = await stub.getState("ARR");
+		const arrKeyString = arrKeys.toString();
+		const arrKey = JSON.parse(arrKeyString);
+		const key = (args[0] + "").toString();
+		const valueFind = (args[1] + "").toString();
+	
+		for(let i = 0; i < arrKey.length; i++) {
+			if(arrKey[i] === key) {
+				const Buffer = await stub.getState(key);
+				let Str = Buffer.toString();
+				Str = JSON.parse(Str);
+				const value = Str[valueFind];
+				return getResult(value);
+			}
+		}
+	
+		throw new Error("KEY_DOES_NOT_EXIST");
+	  }
 	// инициализация
 	async initLedger(stub, args) {
 		// создаем пустой массив ключей

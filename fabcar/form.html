@@ -6,7 +6,7 @@
 	<style>
 		.inputField {
 			width: 500px;
-            padding: 5px;
+            padding: 1px;
 		}
 	</style>
 </head>
@@ -17,7 +17,18 @@
 	<h2>Адрес</h2><br>
 	<input id = "adress" type = "text" class = "inputField"><br>
 	<h2>Документы</h2><br>
-	<button id = "documents">Документы</button><br>
+	<input id = "show_documents" type = "button" value = "documents"/>
+	<div id = "documents_form" hidden>
+		<input id = "show_passport" type = "button" value = "passport"/>
+		<div id = "passport_form" hidden>
+			<input id = "passport_serial" type = "text" value = "SERIAL" class = "inputField"><br>
+			<input id = "passport_number" type = "text" value = "NUMBER" class = "inputField"><br>	
+		</div>
+		<input id = "show_snils" type = "button" value = "snils"/>
+		<div id = "snils_form" hidden>
+			<input id = "snils_serial" type = "text" value = "SERIAL" class = "inputField"><br>	
+		</div>
+    </div>
 	<h2>ФИО матери</h2><br>
 	<input id = "mother" type = "text" class = "inputField"><br>
 	<h2>Номер телефона матери</h2><br>
@@ -25,9 +36,11 @@
 	<h2>ФИО отца</h2><br>
 	<input id = "father" type = "text" class = "inputField"><br>
 	<h2>Номер телефона отца</h2><br>
-	<input id = "father_phone" type = "text" class = "inputField"><br>
-
-
+	<input id = "father_phone" type = "text" class = "inputField"><br><br>
+	<input id = "start_pull" type = "button" value = "START PULL"/><br>
+	<div id = "pull_form" hidden>
+		<p>PULL</p><br>
+	</div>
 	<button id = "btn">SEND</button>
 	<script>
 		function sendPost(url, body, callback) {
@@ -44,13 +57,36 @@
 			};
 		};
 		window.onload = function() {
+			document.getElementById("show_documents").onclick = function() {
+				let form = document.getElementById("documents_form");
+				form.hidden = !form.hidden;
+			}
+			document.getElementById("show_passport").onclick = function() {
+				let form = document.getElementById("passport_form");
+				form.hidden = !form.hidden;
+			}
+			document.getElementById("show_snils").onclick = function() {
+				let form = document.getElementById("snils_form");
+				form.hidden = !form.hidden;
+			}
+			document.getElementById("start_pull").onclick = function() {
+				let form = document.getElementById("pull_form");
+				form.hidden = !form.hidden;
+			}
 			document.getElementById("btn").onclick = function() {
+				let key_value = document.getElementById("child").value + "";
 				const obj = {
-					key: document.getElementById("child").value + "",
+					key: key_value,
 					value: {
-						name: key,
+						name: key_value,
 						adress: document.getElementById("adress").value + "",
-						documents: document.getElementById("documents").value + "",
+						documents: {
+							passport: {
+								ser: document.getElementById("passport_serial").value + "",
+								num: document.getElementById("passport_number").value + "",
+							},
+							snils: document.getElementById("snils_serial").value + "",
+						},
 						mother: document.getElementById("mother").value + "",
 						mother_phone: document.getElementById("mother_phone").value + "",
 						father: document.getElementById("father").value + "",
@@ -58,6 +94,7 @@
 					}
 				};
 				const objString = JSON.stringify(obj);
+				alert(objString);
 				sendPost("/parce_form", objString, function(answer) {
 					alert(answer);
 				});
