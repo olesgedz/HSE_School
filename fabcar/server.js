@@ -287,3 +287,23 @@ app.post("/readbase", function(request, response) {
         });
     });
 });
+
+app.post("/change", function(request, response) {
+    let buffer = [];
+    request.on('data', (data) => {
+        buffer.push(data);
+    }).on('end', () => {
+        const bodyString = buffer.join("");
+        const bodyObj = JSON.parse(bodyString);
+        console.log("Post body:");
+        console.log("Key: " + bodyObj.key);
+        console.log("Family: " + bodyObj.family);
+        MakeInvoke("applyInfoChange", [bodyObj.key, bodyObj.family], function(answer) {
+            if(answer === "ERROR")  {
+                response.end("Ошибка изменения иформации");
+            } else {
+                response.end("Изменения внесены успешно");
+            }
+        });
+    });
+});
