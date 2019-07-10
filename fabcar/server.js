@@ -222,3 +222,44 @@ function MakeInvoke(operation, argumentsArray, callback) {
         callback("ERROR");
     });
 }
+
+app.post("/readbase", function(request, response) {
+    let buffer = [];
+    request.on('data', (data) => {
+        buffer.push(data);
+    }).on('end', () => {
+        const bodyString = buffer.join("");
+        const bodyObj = JSON.parse(bodyString);
+        console.log("Post body:");
+        console.log("Key: " + bodyObj.key);
+        console.log("Family: " + bodyObj.family);
+        MakeInvoke("insertFamily", [bodyObj.key], function(answer) {
+            console.log(answer);
+            if(answer === "ERROR")  {
+                response.end("Ошибка в поиске семьи");
+            } else {
+                response.end(answer);
+            }
+        });
+    });
+});
+
+app.post("/change", function(request, response) {
+    let buffer = [];
+    request.on('data', (data) => {
+        buffer.push(data);
+    }).on('end', () => {
+        const bodyString = buffer.join("");
+        const bodyObj = JSON.parse(bodyString);
+        console.log("Post body:");
+        console.log("Key: " + bodyObj.key);
+        console.log("Family: " + bodyObj.family);
+        MakeInvoke("applyInfoChange", [bodyObj.key, bodyObj.family], function(answer) {
+            if(answer === "ERROR")  {
+                response.end("Ошибка изменения иформации");
+            } else {
+                response.end("Изменения внесены успешно");
+            }
+        });
+    });
+});

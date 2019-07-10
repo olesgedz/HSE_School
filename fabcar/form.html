@@ -3,10 +3,18 @@
 <head>
 	<meta charset="UTF-8">
 	<title>FORM</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<style>
+		
 		.inputField {
 			width: 500px;
             padding: 1px;
+		}
+		.row{
+		background-color: #957bbe;
+   		 border-radius: .25rem;
 		}
 	</style>
 </head>
@@ -28,8 +36,11 @@
 		<div id = "snils_form" hidden>
 			<input id = "snils_serial" type = "text" value = "SERIAL" class = "inputField"><br>	
 		</div>
-    </div>
-	<h2>ФИО матери</h2><br>
+	</div>
+	<div class="container-fluid container">
+	<div class="row">
+		<h2>ФИО матери</h2><br>
+	</div>
 	<input id = "mother" type = "text" class = "inputField"><br>
 	<h2>Номер телефона матери</h2><br>
 	<input id = "mother_phone" type = "text" class = "inputField"><br>
@@ -37,7 +48,12 @@
 	<input id = "father" type = "text" class = "inputField"><br>
 	<h2>Номер телефона отца</h2><br>
 	<input id = "father_phone" type = "text" class = "inputField"><br><br>
-	<button id = "btn">SEND</button>
+	<input id = "start_pull" type = "button" value = "START PULL"/><br>
+	<div id = "pull_form" hidden>
+		<p>PULL</p><br>
+	</div>
+	<button id = "btn" class="btn btn-primary btn-sm" >SEND</button>
+	</div>
 	<script>
 		function sendPost(url, body, callback) {
 			let r = new XMLHttpRequest();
