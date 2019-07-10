@@ -6,26 +6,84 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<style>
-		
+	<style>	
 		.inputField {
 			width: 500px;
             padding: 1px;
 		}
-		.row{
-		background-color: #957bbe;
-   		 border-radius: .25rem;
+		.breaker{
+			background-color: #FFFFFF;
+   			height: 30px;
+		}
+		.middle {
+			width: 80%;
+			margin: 0 auto;
+    		box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
+		}
+		.head {
+			background: #2c2c2c;
+		}
+		.head p {
+			color: #FFFFFF;
+			font-size: 50px;
+			padding: 30px;
+		}
+		.fieldName {
+			background: #d1d405;
+		}
+		.fieldName p {
+			color: #2c2c2c;
+			font-size: 15px;
+			padding: 20px;
 		}
 	</style>
 </head>
 <body>
-	<h1>FORM PAGE</h1><br>
-	<h2>ФИО ребенка</h2><br>
-	<input id = "child" type = "text" class = "inputField"><br>
-	<h2>Адрес</h2><br>
-	<input id = "adress" type = "text" class = "inputField"><br>
-	<h2>Документы</h2><br>
-	<input id = "show_documents" type = "button" value = "documents"/>
+	<div class = "middle">
+	<div class = "head"><p>FORM PAGE</p></div>
+	<div class = "breaker"></div>
+
+	<div class = "fieldName"><p>ФИО ребенка</p></div>	
+	<div class = "inputField">
+		<input id = "child" type = "text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+	</div>
+
+	<div class = "p-3 mb-0 bg-warning text-dark" class = "test">Адрес</div>
+
+	<div class="input-group mb-0">
+		<input id = "adress" type = "text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+	</div>
+
+	<div class = "p-3 mb-0 bg-warning text-dark" class = "test">Документы</div>
+
+	<div class="input-group mb-0">
+		<input id = "show_documents" type = "text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+	</div>
+
+	<div class = "p-3 mb-0 bg-warning text-dark" class = "test">ФИО матери</div>
+
+	<div class="input-group mb-0">
+		<input id = "mother" type = "text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+	</div>
+
+	<div class = "p-3 mb-0 bg-warning text-dark" class = "test">Номер телефона матери</div>
+
+	<div class="input-group mb-0">
+		<input id = "mother_phone" type = "text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+	</div>
+
+	<div class = "p-3 mb-0 bg-warning text-dark" class = "test">ФИО отца</div>
+
+	<div class="input-group mb-0">
+		<input id = "father" type = "text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+	</div>
+
+	<div class = "p-3 mb-0 bg-warning text-dark" class = "test">Номер телефона отца</div>
+
+	<div class="input-group mb-0">
+		<input id = "father_phone" type = "text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+	</div>
+
 	<div id = "documents_form" hidden>
 		<input id = "show_passport" type = "button" value = "passport"/>
 		<div id = "passport_form" hidden>
@@ -36,21 +94,6 @@
 		<div id = "snils_form" hidden>
 			<input id = "snils_serial" type = "text" value = "SERIAL" class = "inputField"><br>	
 		</div>
-	</div>
-	<div class="container-fluid container">
-	<div class="row">
-		<h2>ФИО матери</h2><br>
-	</div>
-	<input id = "mother" type = "text" class = "inputField"><br>
-	<h2>Номер телефона матери</h2><br>
-	<input id = "mother_phone" type = "text" class = "inputField"><br>
-	<h2>ФИО отца</h2><br>
-	<input id = "father" type = "text" class = "inputField"><br>
-	<h2>Номер телефона отца</h2><br>
-	<input id = "father_phone" type = "text" class = "inputField"><br><br>
-	<input id = "start_pull" type = "button" value = "START PULL"/><br>
-	<div id = "pull_form" hidden>
-		<p>PULL</p><br>
 	</div>
 	<button id = "btn" class="btn btn-primary btn-sm" >SEND</button>
 	</div>
