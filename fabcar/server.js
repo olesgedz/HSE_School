@@ -277,7 +277,7 @@ app.post("/readbase", function(request, response) {
         console.log("Post body:");
         console.log("Key: " + bodyObj.key);
         console.log("Family: " + bodyObj.family);
-        MakeInvoke("getFamilyData", [bodyObj.key], function(answer) {
+        MakeInvoke("insertFamily", [bodyObj.key], function(answer) {
             console.log(answer);
             if(answer === "ERROR")  {
                 response.end("Ошибка в поиске семьи");
