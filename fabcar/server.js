@@ -19,6 +19,10 @@ app.get('/main', function(req, res) {
 	res.sendfile("main.html");
 });
 
+app.get("/watch", function(req, res) {
+	res.sendfile("keys.html");
+});
+
 app.get("/add", function(req, res) {
 	res.sendfile("form.html");
 });
@@ -304,6 +308,20 @@ app.post("/change", function(request, response) {
             } else {
                 response.end("Изменения внесены успешно");
             }
+        });
+    });
+});
+
+
+app.post("/show_keys", function(request, response) {
+    let buffer = [];
+    request.on('data', (data) => {
+        buffer.push(data);
+    }).on('end', () => {
+        const bodyString = buffer.join("");
+        const bodyObj = JSON.parse(bodyString);
+        MakeInvoke("showKeys", [bodyObj.key, bodyObj.family], function(answer) {
+                response.end(answer);
         });
     });
 });
