@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Read Base</title>
+    <style>
+        .qqq {
+            width: 500px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Read Base</h1>
+
+<p>Read Base</p>
+<input id = "keyField" type = "text" class = "qqq">
+
+<br>
+<br>
+
+<p>JSON строка - содержимое семьи</p>
+<input id = "familyField" type = "text" class = "qqq">
+
+<br>
+<br>
+<div id = "box1">sczczxc</div>
+<button id = "btn">Get families</button>
+
+<script>
+    function sendPost(url, body, callback) {
+        let r = new XMLHttpRequest();
+        r.open("POST", url, true);
+        r.withCredentials = true;
+        r.send(body);
+        r.onreadystatechange = function() {
+            if(r.readyState === 4 && r.status === 200) {
+                const answer = r.responseText;
+                r = null;
+                callback(answer);
+            }
+        }
+    }
+
+    window.onload = function() {
+        document.getElementById("btn").onclick = function() {
+            const key = document.getElementById("keyField").value + "";
+            const family = document.getElementById("familyField").value + "";
+            const obj = {
+                key: key,
+                family: family,
+            }
+            const box = document.getElementById("box1");
+            
+            const objString = JSON.stringify(obj);
+            sendPost("/readbase", objString, function(answer) {
+
+                alert(answer);
+                const objData = JSON.parse(answer);
+                
+                box.innerHTML = "<h1>" + "Name:" +objData[0]+"</h1><br>" + "<h1>" + "Family:" +objData[1]+"</h1>";
+            });
+        }
+    }
+</script>
+    
+</body>
+</html>

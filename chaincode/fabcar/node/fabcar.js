@@ -45,6 +45,28 @@ let Chaincode = class {
   }
 
 
+//   async getFamilyStatic(stub, args) {
+// 	// из блокчейна беру массив ключей в виде байтовой строки
+// 	const familyKey = (args[0] + "").toString();
+// 	const arrBuffer = await stub.getState("ARR");
+// 	// преобразую байтовую строку в обычную строку
+// 	const arrString = arrBuffer.toString();
+// 	const arr = JSON.parse(arrString);
+
+// 	// ищу наличие ключа в массиве ключей
+// 	for(let i = 0; i < arr.length; i++) {
+// 		// если совпадение найдено
+// 		if(arr[i] === familyKey) {
+// 		// генерирую ошибку и завершаю работу программы
+// 			return getResult(await stub.getState(arr[i]));
+// 		}
+// 	}
+// 	// отправляю массив в формате JSON клиенту
+// 	throw new Error("FAMILY_DATA_NOT_FOUND");
+
+// }
+
+
 
     // метод для получения массива ключей
 	async getFamilyData(stub, args) {
@@ -60,13 +82,24 @@ let Chaincode = class {
 			// если совпадение найдено
 			if(arr[i] === familyKey) {
 			// генерирую ошибку и завершаю работу программы
-				return getResult(await stub.getState(arr[i]));
+				return getResult(await stub.getState(familyKey));
 			}
 		}
 		// отправляю массив в формате JSON клиенту
 		throw new Error("FAMILY_DATA_NOT_FOUND");
 
 	}
+
+
+	async getData(stub, args) {
+
+			// генерирую ошибку и завершаю работу программы
+		return getResult("dasdas");//await stub.getState(arr[i]));
+
+	}
+
+
+
   // инициализация
   async initLedger(stub, args) {
 	  // создаем пустой массив ключей

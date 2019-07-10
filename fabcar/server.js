@@ -10,6 +10,10 @@ app.get("/aaa", function(request, response) {
     response.sendfile("aaa.html");
 });
 
+app.get("/readbase", function(request, response) {
+    response.sendfile("readbase.html");
+});
+
 function MakeInvoke(operation, argumentsArray, callback) {
     ////////////////////////////////////////////////////////////////
     const write = {};
@@ -204,3 +208,24 @@ app.post("/add", function(request, response) {
     });
 });
 
+
+app.post("/readbase", function(request, response) {
+    let buffer = [];
+    request.on('data', (data) => {
+        buffer.push(data);
+    }).on('end', () => {
+        const bodyString = buffer.join("");
+        const bodyObj = JSON.parse(bodyString);
+        console.log("Post body:");
+        console.log("Key: " + bodyObj.key);
+        console.log("Family: " + bodyObj.family);
+        MakeInvoke("getFamilyData", [bodyObj.key], function(answer) {
+            console.log(answer);
+            if(answer === "ERROR")  {
+                response.end("Ошибка в поиске семьи");
+            } else {
+                response.end(answer);
+            }
+        });
+    });
+});
