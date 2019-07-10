@@ -1,6 +1,5 @@
 "use strict";
 
-const execSync = require('child_process').execSync;
 const express = require("express");
 const app = express();
 
@@ -36,34 +35,12 @@ app.post("/parce_form", function(req, res) {
         const bodyObj = JSON.parse(bodyString);
 		MakeInvoke("insertFamily", [bodyObj.key, JSON.stringify(bodyObj.value)], function(answer) {
             //console.log(answer);
-            if (answer === "ERROR")  {
-                res.end("Ошибка добавления семьи");
+            if (answer === "CREATE_NEW_FAMILY_OK") {
+                res.end("Информация добавлена успешно!");
 			}
 			else {
-                res.end("Добавление успешно");
+                res.end("Информация уже существует");
             };
-        });
-		res.end("Добавление успешно");
-    });
-});
-
-
-app.post("/add", function(request, response) {
-    let buffer = [];
-    request.on('data', (data) => {
-        buffer.push(data);
-    }).on('end', () => {
-        const bodyString = buffer.join("");
-        const bodyObj = JSON.parse(bodyString);
-        console.log("Post body:");
-        console.log("Key: " + bodyObj.key);
-        console.log("Family: " + bodyObj.family);
-        MakeInvoke("insertFamily", [bodyObj.key, bodyObj.family], function(answer) {
-            if(answer === "ERROR")  {
-                response.end("Ошибка добавления семьи");
-            } else {
-                response.end("Добавление успешно");
-            }
         });
     });
 });
@@ -153,7 +130,7 @@ function MakeInvoke(operation, argumentsArray, callback) {
             proposalResponses[0].response.status === 200) {
                 isProposalGood = true;
                 write.log('Transaction proposal was good');
-                console.log(proposalResponses[0].response.payload + "");
+//                console.log(proposalResponses[0].response.payload + "");
                 callback(proposalResponses[0].response.payload + "");
             } else {
                 callback("ERROR");
@@ -245,23 +222,3 @@ function MakeInvoke(operation, argumentsArray, callback) {
         callback("ERROR");
     });
 }
-
-app.post("/add", function(request, response) {
-    let buffer = [];
-    request.on('data', (data) => {
-        buffer.push(data);
-    }).on('end', () => {
-        const bodyString = buffer.join("");
-        const bodyObj = JSON.parse(bodyString);
-        console.log("Post body:");
-        console.log("Key: " + bodyObj.key);
-        console.log("Family: " + bodyObj.family);
-        MakeInvoke("insertFamily", [bodyObj.key, bodyObj.family], function(answer) {
-            if(answer === "ERROR")  {
-                response.end("Ошибка добавления семьи");
-            } else {
-                response.end("Добавление успешно");
-            }
-        });
-    });
-});

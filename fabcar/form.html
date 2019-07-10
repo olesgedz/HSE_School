@@ -37,10 +37,6 @@
 	<input id = "father" type = "text" class = "inputField"><br>
 	<h2>Номер телефона отца</h2><br>
 	<input id = "father_phone" type = "text" class = "inputField"><br><br>
-	<input id = "start_pull" type = "button" value = "START PULL"/><br>
-	<div id = "pull_form" hidden>
-		<p>PULL</p><br>
-	</div>
 	<button id = "btn">SEND</button>
 	<script>
 		function sendPost(url, body, callback) {
@@ -69,10 +65,6 @@
 				let form = document.getElementById("snils_form");
 				form.hidden = !form.hidden;
 			}
-			document.getElementById("start_pull").onclick = function() {
-				let form = document.getElementById("pull_form");
-				form.hidden = !form.hidden;
-			}
 			document.getElementById("btn").onclick = function() {
 				let key_value = document.getElementById("child").value + "";
 				const obj = {
@@ -94,9 +86,10 @@
 					}
 				};
 				const objString = JSON.stringify(obj);
-				alert(objString);
 				sendPost("/parce_form", objString, function(answer) {
 					alert(answer);
+					if (answer === "Информация уже существует")
+						window.location = "/main";
 				});
 			};
 		};
