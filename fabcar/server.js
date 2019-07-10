@@ -4,9 +4,6 @@ const express = require("express");
 const app = express();
 const port = 5005;
 app.listen(port);
-<<<<<<< HEAD
-console.log("Port: " + port);
-=======
 console.log("Server works on port: " + port);
 
 app.get('/main', function(req, res) {
@@ -43,7 +40,6 @@ app.post("/parce_form", function(req, res) {
         });
     });
 });
->>>>>>> d6850d5cf724d7a5315223c7d41449a0dcc256f9
 
 app.get("/aaa", function(request, response) {
     response.sendfile("aaa.html");
@@ -130,11 +126,7 @@ function MakeInvoke(operation, argumentsArray, callback) {
             proposalResponses[0].response.status === 200) {
                 isProposalGood = true;
                 write.log('Transaction proposal was good');
-<<<<<<< HEAD
-                console.log("AAAAAA: " + proposalResponses[0].response.payload + "");
-=======
 //                console.log(proposalResponses[0].response.payload + "");
->>>>>>> d6850d5cf724d7a5315223c7d41449a0dcc256f9
                 callback(proposalResponses[0].response.payload + "");
             } else {
                 callback("ERROR");
@@ -262,12 +254,6 @@ app.post("/change", function(request, response) {
             if(answer === "ERROR")  {
                 response.end("Ошибка изменения иформации");
             } else {
-<<<<<<< HEAD
-                response.end("Изменение успешно");
-            }
-        });
-    });
-=======
                 response.end("Изменения внесены успешно");
             }
         });
@@ -286,5 +272,4 @@ app.post("/show_keys", function(request, response) {
                 response.end(answer);
         });
     });
->>>>>>> d6850d5cf724d7a5315223c7d41449a0dcc256f9
 });
