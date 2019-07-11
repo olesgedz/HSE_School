@@ -70,11 +70,29 @@
 			let ans = "<table border = '2px solid black'>";
 			ans = ans + "<tr><td>" + "<b>Данные ребёнка</b>" + "</td></tr>";
 			for(let i = 0; i < arr.length; i++) {
-				console.log(arr[i]);
-				ans = ans + "<tr><td>" + "<button>" + arr[i] + "</button>" + "</td></tr>";
+				const id = "bbb" + i;
+				ans = ans + "<tr><td>" + "<button id = '" + id + "' onclick = 'f(`" + id + "`)'>" + arr[i] + "</button>" + "</td></tr>";
 			}
 			ans += "</table>";
 			box.innerHTML = ans;
+		});
+	}
+
+	function f(id) {
+		const key = document.getElementById(id).innerHTML + "";
+		console.log('Key: ' + key);
+		const obj = {
+			key: key,
+		}
+		const objString = JSON.stringify(obj);
+		sendPost("/readbase", objString, function(ans) {
+			if(ans === "ERROR") {
+				alert("Ошибка")
+			} else {
+
+				
+
+			}
 		});
 	}
 </script>
