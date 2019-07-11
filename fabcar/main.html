@@ -3,22 +3,66 @@
 <head>
 	<meta charset="UTF-8">
 	<title>База данных</title>
+	<link href="style.css" rel="stylesheet" type="text/css" media="all">
 	<style>
-		#mainPage{
-			display: block
+		.mainTable {
+			width: 100%;
+			height: 85%;
+		}
+		tr td {
+			width: 30%;
+		}
+		a {
+			color: #2c2c2c;
+			text-decoration: none;
+		}
+		.btn {
+			border-radius: 5px;
+			background: #bbbbbb;
+			text-align: center;
+			font-size: 4vmin;
 		}
 	</style>
 </head>
 <body>
-		<div id="mainPage">
-			<a id="startButton" href = "/form">
-			<button>Ввести данные</button>
-			</a>
-			<br>
-			<br>
-			<a id="startButton" href = "/watch">
-			<button>Просмотреть данные</button>
-			</a>
-		</div>
+	<div class="middle">
+			<div class="head">
+				<div class="headText">ГЛАВНАЯ СТРАНИЦА</div>
+			</div>
+		<table class="mainTable">
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td class="btn">
+					<a href="/form" >
+						ВВОД ДАННЫХ
+					</a>
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td class="btn">
+					<a href="/watch">
+						ВЫВОД ДАННЫХ</a>
+					</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
 </body>
 </html>

@@ -22,6 +22,10 @@ app.get("/aaa", function(req, res) {
 	res.sendfile("aaa.html");
 });
 
+app.get("/style.css", function(req, res) {
+	res.sendfile("style.css");
+});
+
 app.post("/parce_form", function(req, res) {
     let buffer = [];
     req.on('data', (data) => {

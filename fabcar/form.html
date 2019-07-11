@@ -2,126 +2,60 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<link href="style.css" rel="stylesheet" type="text/css" media="all">
 	<title>FORM</title>
-	<style>
-		html {
-  			height: 100%;
-			width: 100%;
-		}
-		body {
-  			height: inherit;
-			width: inherit;
-			margin: 0;
-		}
-		.middle {
-			display: block;
-			width: 80%;
-			height: 100%;
-			margin: 0 auto;
-    		box-shadow: 0 0 10px rgba(0,0,0,0.5);
-		}
-		.head {
-			display: block;
-			width: 100%;
-			height: 15%;
-			background: #2c2c2c;
-			color: #FFFFFF;
-			font-size: 7vmin;
-		}
-		.head span {
-			display: block;
-			padding: 20px;
-		}
-		.inputWrapper {
-			display: table;
-			width: 100%;
-			height: 10%;
-		}
-		.fieldName {
-			display: table-cell;
-			background: #05cdd4;
-			width: 30%;
-			height: 100%;
-			color: #FFFFFF;
-			font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-			font-weight: bold;
-			font-size: 4vmin;
-			text-align: center;
-			border: 2px solid white;
-			vertical-align: middle;
-			padding: 5px;
-		}
-		.inputField {
-			display: table-cell;
-			width: 70%;
-			height: 100%;
-		}
-		.inputField input {
-			width: 100%;
-			height: 100%;
-			border: 4px 0px #2c2c2c;
-			box-sizing: border-box;
-			font-size: 10vmin;
-			color: #2c2c2c;
-		}
-		.button {
-			cursor: pointer;
-			margin: 0 auto;	
-			width: 100%;
-			height: 100%;
-			background:#05cdd4;
-			color: #FFFFFF;
-			font-weight: bold;
-			font-size: 5vmin;
-			text-align: center;
-			border: 2px solid white;
-			vertical-align: middle;
-			padding: 5px;
-		}
-	</style>
 </head>
 <body>
 	<div class="middle">
-	<div class="head"><span>FORM PAGE</span></div>
+	<div class="head">
+		<div class="headTextField">
+			<div class="headText">ФОРМА ВВОДА</div>
+		</div>
+		<div class="headButtonField" id="back">
+			<a href="/" style="text-decoration:none;"><div class="headButtonText">НАЗАД</div></a>
+		</div>
+	</div>
 
 	<div class="inputWrapper">
-		<div class="fieldName">ФИО ребенка</div>	
+		<div class="fieldName">ФИО РЕБЕНКА</div>	
 		<div class="inputField">
 			<input id="child" type="text">
 		</div>
 	</div>
 	<div class="inputWrapper">
-		<div class="fieldName"><span>Адрес</span></div>	
+		<div class="fieldName"><span>АДРЕС</span></div>	
 		<div class="inputField">
 			<input id="adress" type="text">
 		</div>
 	</div>
 	<div class="inputWrapper">
-		<div class="fieldName"><span>ФИО матери</span></div>	
+		<div class="fieldName"><span>ФИО МАТЕРИ</span></div>	
 		<div class="inputField">
 			<input id="mother" type="text">
 		</div>
 	</div>
 	<div class="inputWrapper">
-		<div class="fieldName"><span>Номер телефона матери</span></div>
+		<div class="fieldName"><span>НОМЕР ТЕЛЕФОНА МАТЕРИ</span></div>
 		<div class="inputField">
 			<input id="mother_phone" type="text">
 		</div>
 	</div>
 	<div class="inputWrapper">
-		<div class="fieldName"><span>ФИО отца</span></div>
+		<div class="fieldName"><span>ФИО ОТЦА</span></div>
 		<div class="inputField">
 			<input id="father" type="text">
 		</div>
 	</div>
 	<div class="inputWrapper">
-		<div class="fieldName"><span>Номер телефона отца</span></div>
+		<div class="fieldName"><span>НОМЕР ТЕЛЕФОНА ОТЦА</span></div>
 		<div class="inputField">
 			<input id="father_phone" type="text">
 		</div>
 	</div>
 	<div class="inputWrapper">
-		<button id = "btn" class="button">SEND</button>
+		<div id = "btn" class="sendButtonField">
+			<div class="sendButtonText">ОТПРАВИТЬ</div>
+		</div>
 	</div>
 </div>
 <script>
@@ -156,7 +90,7 @@
 				sendPost("/parce_form", objString, function(answer) {
 					alert(answer);
 					if (answer === "Информация уже существует")
-						window.location = "/main";
+						window.location = "/";
 				});
 			};
 		};
