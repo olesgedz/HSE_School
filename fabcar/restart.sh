@@ -5,3 +5,4 @@ sudo docker network prune
 sudo ./startFabric.sh node
 node enrollAdmin.js
 node registerUser.js
+node invoke.js initLedger

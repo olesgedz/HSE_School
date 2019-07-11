@@ -17,7 +17,7 @@ body {
 .head {
 	width: 100%;
 	height: 15%;
-	background: #2c2c2c;
+	background:rgba(0,152,62,255);
 }
 .headTextField {
 	display: block;
@@ -26,7 +26,7 @@ body {
 	float: left;
 }
 .headText {
-	color: #bbbbbb;
+	color: #ffffff;
 	font-size: 7vmin;
 	height: 100%;
 	display: flex;
@@ -39,11 +39,11 @@ body {
 	height: 100%;
 	float: right;
 	cursor: pointer;
-	background: #bbbbbb
+	background: rgb(30, 175, 88);
 }
 .headButtonText {
 	font-size: 5vmin;
-	color: #2c2c2c;
+	color: #ffffff;
 	height: 100%;
   	display: flex;
   	align-items: center;
@@ -56,13 +56,13 @@ body {
 }
 .fieldName {
 	display: table-cell;
-	background: #bbbbbb;
+	background: #ffffff;
 	width: 30%;
 	height: 100%;
-	color: #2c2c2c;
+	color: #000000;
 	font-size: 3vmin;
 	text-align: center;
-	border: 1px solid #2c2c2c;
+	border: 1px solid #bbbbbb;
 	vertical-align: middle;
 	padding: 5px;
 }
@@ -74,17 +74,17 @@ body {
 .inputField input {
 	width: 100%;
 	height: 100%;
-	border: 4px 0px #2c2c2c;
+	border: 4px 0px rgba(0,152,62,255);
 	box-sizing: border-box;
 	font-size: 10vmin;
-	color: #2c2c2c;
+	color: rgba(0,152,62,255);
 }
 .button {
 	cursor: pointer;
 	margin: 0 auto;	
 	width: 100%;
 	height: 100%;
-	background:#2c2c2c;
+	background:rgba(0,152,62,255);
 	color: #bbbbbb;
 	font-size: 5vmin;
 	text-align: center;
@@ -96,11 +96,11 @@ body {
 	height: 100%;
 	float: right;
 	cursor: pointer;
-	background: #2c2c2c
+	background: rgba(0,152,62,255);
 }
 .sendButtonText {
 	font-size: 5vmin;
-	color: #bbbbbb;
+	color: #ffffff;
 	height: 100%;
   	display: flex;
   	align-items: center;

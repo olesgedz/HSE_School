@@ -46,7 +46,11 @@
 		.head {
 			width: 100%;
 			height: 15%;
-			font-size: 7vmin;			
+			font-size: 7vmin;
+			background-color:rgba(0,152,62,255);			
+		}
+		.bg-green{
+			background-color:rgba(0,152,62,255);	
 		}
 	</style>
 </head>
@@ -80,11 +84,11 @@
 
 		sendPost("/show_keys", objString, function(answer) {
 			const arr = JSON.parse(answer);
-			let ans = "<table border = '2px solid black' class='table table-dark'>";
+			let ans = "<table border = '2px solid black' class='table'>";
 			ans = ans + "<tr><td>" + "<b>Данные ребёнка</b>" + "</td></tr>";
 			for(let i = 0; i < arr.length; i++) {
 				const id = "bbb" + i;
-				ans = ans + "<tr><td>" + "<button id = '" + id + "' onclick = 'f(`" + id + "`)' class = 'btn btn-dark' style = 'width:30%; margin:auto 32%;'>" + arr[i] + "</button>" + "</td></tr>";
+				ans = ans + "<tr><td>" + "<button id = '" + id + "' onclick = 'f(`" + id + "`)' class = 'btn btn-dark bg-green' style = 'width:30%; margin:auto 32%;'>" + arr[i] + "</button>" + "</td></tr>";
 			}
 			ans += "</table>";
 			box.innerHTML = ans;
@@ -104,7 +108,7 @@
 				alert("Ошибка")
 			} else {
 				const objData = JSON.parse(answer);
-			    let ans = "<table border = '2px solid black' class='table table-dark'>";
+			    let ans = "<table border = '2px solid black' class='table'>";
                 ans +=  "<tr><td style = 'width:50%'>" + "<b>ФИО</b>" + "</td><td style = 'width:50%'>" + "<b>"+ key + "</b>" + "</td></tr>";
                 ans +=  "<tr><td>" + "<b>Адрес</b>" + "</td><td>" + "<b>"+ objData.adress + "</b>" + "</td></tr>";
                 ans +=  "<tr><td>" + "<b>Документы</b>" + "</td><td>";
@@ -134,7 +138,7 @@
 	}
 </script>
 <div style = "box-shadow: 0 0 10px rgba(0,0,0,0.5);">
-	<div class="p-3 mb-2 bg-dark text-white head" style="width:100%; padding:0; margin:0;">
+	<div class="p-3 mb-2 text-white bg-green head" style="width:100%; padding:0; margin:0;">
 		<a href= "/" style=" text-decoration: none;"><div class="text-white ">FamilyLedger</div> </a>
 	</div>
 	<hr>
@@ -143,7 +147,7 @@
 	<br>
 	<br>
 	<div class="container container-fluid container-dark">
-		<button onclick = "printKeys();" class = 'btn btn-dark' style="margin-left: 35%;">Получить список детей</button>
+		<button onclick = "printKeys();" class = 'btn btn-dark bg-green' style="margin-left: 35%;">Получить список детей</button>
 		<div id = "box1"></div>
 		<div id = "box2"></div>
 	</div>
