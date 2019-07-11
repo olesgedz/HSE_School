@@ -6,16 +6,22 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<title>Тестирование</title>
 	<style>
+		html
+		{
+			width:100%;
+			height:100%;
+		}
 		body {
-			font-family: Geneva, Arial, Helvetica, sans-serif;
-			margin: 50px;
+			width:80%;
+			margin: 0 auto;
+    		box-shadow: 0 0 10px rgba(0,0,0,0.5);
 		}
 		
 		td {
 			padding: 5px;
 		}
 		
-		#box1 {
+		/* #box1 {
 			padding: 15px;
 			background: #CCCCCC;
 		}
@@ -23,7 +29,7 @@
 		#box2 {
 			padding: 15px;
 			background: #CCCCCC;
-		}
+		} */
 		
 		.field {
 			margin-left: 15px;
@@ -34,8 +40,13 @@
 		
 		button {
 			font-family: Geneva, Arial, Helvetica, sans-serif;
-			padding: 7px;
+			margin: 0 10px 10px 0;
 			width: 270px;
+		}
+		.head {
+			width: 100%;
+			height: 15%;
+			font-size: 7vmin;			
 		}
 	</style>
 </head>
@@ -73,7 +84,7 @@
 			ans = ans + "<tr><td>" + "<b>Данные ребёнка</b>" + "</td></tr>";
 			for(let i = 0; i < arr.length; i++) {
 				const id = "bbb" + i;
-				ans = ans + "<tr><td>" + "<button id = '" + id + "' onclick = 'f(`" + id + "`)' class = 'btn btn-dark'>" + arr[i] + "</button>" + "</td></tr>";
+				ans = ans + "<tr><td>" + "<button id = '" + id + "' onclick = 'f(`" + id + "`)' class = 'btn btn-dark' style = 'width:100%;'>" + arr[i] + "</button>" + "</td></tr>";
 			}
 			ans += "</table>";
 			box.innerHTML = ans;
@@ -122,15 +133,22 @@
 		});
 	}
 </script>
-
+<div class="p-3 mb-2 bg-dark text-white head" style="width:100%; padding:0; margin:0;">
+	<a href= "/form" style=" text-decoration: none;"><div class="text-white ">FamilyLedger</div> </a>
+</div>
 <hr>
 <br>
 
-<button onclick = "printKeys();" class = 'btn btn-dark'>Получить список детей</button>
 <br>
 <br>
-<div id = "box1"></div>
-<div id = "box2"></div>
-
+<div class="container container-fluid container-dark">
+	<button onclick = "printKeys();" class = 'btn btn-dark' style="margin-left: 35%">Получить список детей</button>
+	<div id = "box1"></div>
+	<div id = "box2"></div>
+</div>
+<br>
+<br>
+<br>
+<hr>
 </body>
 </html>
