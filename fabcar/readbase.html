@@ -2,6 +2,9 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Read Base</title>
     <style>
         .qqq {
@@ -80,7 +83,7 @@
             
             const objString = JSON.stringify(obj);
             sendPost("/readbase", objString, function(answer) {
-                box.innerHTML = "Hello";
+                alert(answer);
                 const objData = JSON.parse(answer);
 			    let ans = "<table border = '2px solid black'>";
                 ans +=  "<tr><td>" + "<b>ФИО</b>" + "</td><td>" + "<b>"+ key + "</b>" + "</td></tr>";
@@ -104,7 +107,6 @@
                 ans +=  "<tr><td>" + "<b>Телефон</b>" + "</td><td>" + "<b>"+ objData.mother_phone + "</b>" + "</td></tr>";
                 ans +=  "<tr><td>" + "<b>Отец</b>" + "</td><td>" + "<b>"+ objData.father + "</b>" + "</td></tr>";
                 ans +=  "<tr><td>" + "<b>Телефон</b>" + "</td><td>" + "<b>"+ objData.father_phone + "</b>" + "</td></tr>";
-                ans += + "<b>"+ key + "</b>" + "</td></tr>"
                 ans += "</table>";
                 box.innerHTML = ans;
             });
