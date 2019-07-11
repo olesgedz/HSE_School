@@ -2,14 +2,6 @@
 
 const express = require("express");
 const app = express();
-
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-reqed-With, Content-Type, Accept");
-    res.header("Cache-Control", "no-cache, no-store, must-revalidate");
-    next();
-});
-
 const port = 5005;
 app.listen(port);
 console.log("Server works on port: " + port);
@@ -49,8 +41,8 @@ app.post("/parce_form", function(req, res) {
     });
 });
 
-app.get("/readbase", function(request, response) {
-    response.sendfile("readbase.html");
+app.get("/aaa", function(request, response) {
+    response.sendfile("aaa.html");
 });
 
 function MakeInvoke(operation, argumentsArray, callback) {

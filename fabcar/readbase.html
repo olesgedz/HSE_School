@@ -2,6 +2,9 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Read Base</title>
     <style>
         .qqq {
@@ -25,9 +28,8 @@
 
 <br>
 <br>
-<div id = "box1">sczczxc</div>
 <button id = "btn">Get families</button>
-
+<div id = "box1"></div>
 <script>
     function sendPost(url, body, callback) {
         let r = new XMLHttpRequest();
@@ -56,18 +58,18 @@
 	}
 
 
-    function printStudents() {
-		sendAjax('?operation=getStudents', function(s) {
-			const obj = JSON.parse(s);
-			let ans = "<table border = '2px solid black'>";
-			ans = ans + "<tr><td>" + "<b>ID студента</b>" + "</td><td>" + "<b>Имя студента</b>" + "</td></tr>";
-			for(let i = 0; i < arr.length; i++) {
-				ans = ans + "<tr><td>" + arr[i].studentId + "</td><td>" + arr[i].studentSurname + "</td></tr>";
-			}
-			ans += "</table>";
-			box.innerHTML = ans;
-		});
-	}
+    // function printStudents() {
+	// 	sendAjax('?operation=getStudents', function(s) {
+	// 		const obj = JSON.parse(s);
+	// 		let ans = "<table border = '2px solid black'>";
+	// 		ans = ans + "<tr><td>" + "<b>ID студента</b>" + "</td><td>" + "<b>Имя студента</b>" + "</td></tr>";
+	// 		for(let i = 0; i < arr.length; i++) {
+	// 			ans = ans + "<tr><td>" + arr[i].studentId + "</td><td>" + arr[i].studentSurname + "</td></tr>";
+	// 		}
+	// 		ans += "</table>";
+	// 		box.innerHTML = ans;
+	// 	});
+	// }
     
     window.onload = function() {
         document.getElementById("btn").onclick = function() {
@@ -81,14 +83,32 @@
             
             const objString = JSON.stringify(obj);
             sendPost("/readbase", objString, function(answer) {
-
                 alert(answer);
                 const objData = JSON.parse(answer);
 			    let ans = "<table border = '2px solid black'>";
-                // let p1 = "<div>: " + objData.name + </d.
-                // let ans = "<table border = '2px solid black'>";
-                // let ans = ans + "<tr><td>" + "<b>ID студента</b>" + "</td><td>" + "<b>Имя студента</b>" + "</td></tr>";
-                box.innerHTML = "<h1>" + "Name:" + key +"</h1><br>" + "<h1>" + "Adress:" + objData.adress +"</h1>";
+                ans +=  "<tr><td>" + "<b>ФИО</b>" + "</td><td>" + "<b>"+ key + "</b>" + "</td></tr>";
+                ans +=  "<tr><td>" + "<b>Адрес</b>" + "</td><td>" + "<b>"+ objData.adress + "</b>" + "</td></tr>";
+                ans +=  "<tr><td>" + "<b>Документы</b>" + "</td><td>";
+                if(objData.documents)
+                {
+                    if(objData.documents.passport)
+                    {
+                        ans +=  "<tr><td>" + "<b>Паспорт</b>" + "</td><td>" + "<b>"+ objData.documents.passport.ser + "</b>";
+                        ans += "<b>" + " " + objData.documents.passport.num + "</b>";
+                        ans +=  "</td></tr>";
+                    }
+                    if(objData.documents.snils)
+                    {
+                        ans +=  "<tr><td>" + "<b>Снилс</b>" + "</td><td>" + "<b>"+ objData.documents.snils + "</b>";
+                        ans +=  + "</td></tr>";
+                    }
+                }
+                ans +=  "<tr><td>" + "<b>Мать</b>" + "</td><td>" + "<b>"+ objData.mother + "</b>" + "</td></tr>";
+                ans +=  "<tr><td>" + "<b>Телефон</b>" + "</td><td>" + "<b>"+ objData.mother_phone + "</b>" + "</td></tr>";
+                ans +=  "<tr><td>" + "<b>Отец</b>" + "</td><td>" + "<b>"+ objData.father + "</b>" + "</td></tr>";
+                ans +=  "<tr><td>" + "<b>Телефон</b>" + "</td><td>" + "<b>"+ objData.father_phone + "</b>" + "</td></tr>";
+                ans += "</table>";
+                box.innerHTML = ans;
             });
         }
     }
