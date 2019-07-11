@@ -14,7 +14,7 @@ const port = 5005;
 app.listen(port);
 console.log("Server works on port: " + port);
 
-app.get('/main', function(req, res) {
+app.get('/', function(req, res) {
 	res.sendfile("main.html");
 });
 
@@ -22,7 +22,7 @@ app.get("/watch", function(req, res) {
 	res.sendfile("keys.html");
 });
 
-app.get("/add", function(req, res) {
+app.get("/form", function(req, res) {
 	res.sendfile("form.html");
 });
 
