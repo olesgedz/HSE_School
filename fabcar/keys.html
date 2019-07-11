@@ -111,21 +111,6 @@
 			    let ans = "<table border = '2px solid black' class='table'>";
                 ans +=  "<tr><td style = 'width:50%'>" + "<b>ФИО</b>" + "</td><td style = 'width:50%'>" + "<b>"+ key + "</b>" + "</td></tr>";
                 ans +=  "<tr><td>" + "<b>Адрес</b>" + "</td><td>" + "<b>"+ objData.adress + "</b>" + "</td></tr>";
-                ans +=  "<tr><td>" + "<b>Документы</b>" + "</td><td>";
-                if(objData.documents)
-                {
-                    if(objData.documents.passport)
-                    {
-                        ans +=  "<tr><td>" + "<b>Паспорт</b>" + "</td><td>" + "<b>"+ objData.documents.passport.ser + "</b>";
-                        ans += "<b>" + " " + objData.documents.passport.num + "</b>";
-                        ans +=  "</td></tr>";
-                    }
-                    if(objData.documents.snils)
-                    {
-                        ans +=  "<tr><td>" + "<b>Снилс</b>" + "</td><td>" + "<b>"+ objData.documents.snils + "</b>";
-                        ans +=  + "</td></tr>";
-                    }
-                }
                 ans +=  "<tr><td style = 'width:50%'>" + "<b>Мать</b>" + "</td><td>" + "<b>"+ objData.mother + "</b>" + "</td></tr>";
                 ans +=  "<tr><td>" + "<b>Телефон</b>" + "</td><td>" + "<b>"+ objData.mother_phone + "</b>" + "</td></tr>";
                 ans +=  "<tr><td>" + "<b>Отец</b>" + "</td><td>" + "<b>"+ objData.father + "</b>" + "</td></tr>";

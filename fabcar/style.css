@@ -77,7 +77,7 @@ body {
 	border: 4px 0px rgba(0,152,62,255);
 	box-sizing: border-box;
 	font-size: 10vmin;
-	color: rgba(0,152,62,255);
+	color: #000000;
 }
 .button {
 	cursor: pointer;
