@@ -2,6 +2,8 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<title>Тестирование</title>
 	<style>
 		body {
@@ -67,11 +69,11 @@
 
 		sendPost("/show_keys", objString, function(answer) {
 			const arr = JSON.parse(answer);
-			let ans = "<table border = '2px solid black'>";
+			let ans = "<table border = '2px solid black' class='table table-dark'>";
 			ans = ans + "<tr><td>" + "<b>Данные ребёнка</b>" + "</td></tr>";
 			for(let i = 0; i < arr.length; i++) {
 				const id = "bbb" + i;
-				ans = ans + "<tr><td>" + "<button id = '" + id + "' onclick = 'f(`" + id + "`)'>" + arr[i] + "</button>" + "</td></tr>";
+				ans = ans + "<tr><td>" + "<button id = '" + id + "' onclick = 'f(`" + id + "`)' class = 'btn btn-dark'>" + arr[i] + "</button>" + "</td></tr>";
 			}
 			ans += "</table>";
 			box.innerHTML = ans;
@@ -91,7 +93,7 @@
 				alert("Ошибка")
 			} else {
 				const objData = JSON.parse(answer);
-			    let ans = "<table border = '2px solid black'>";
+			    let ans = "<table border = '2px solid black' class='table table-dark'>";
                 ans +=  "<tr><td>" + "<b>ФИО</b>" + "</td><td>" + "<b>"+ key + "</b>" + "</td></tr>";
                 ans +=  "<tr><td>" + "<b>Адрес</b>" + "</td><td>" + "<b>"+ objData.adress + "</b>" + "</td></tr>";
                 ans +=  "<tr><td>" + "<b>Документы</b>" + "</td><td>";
@@ -124,7 +126,7 @@
 <hr>
 <br>
 
-<button onclick = "printKeys();">Получить список детей</button>
+<button onclick = "printKeys();" class = 'btn btn-dark'>Получить список детей</button>
 <br>
 <br>
 <div id = "box1"></div>
