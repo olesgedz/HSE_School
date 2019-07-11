@@ -70,11 +70,53 @@
 			let ans = "<table border = '2px solid black'>";
 			ans = ans + "<tr><td>" + "<b>Данные ребёнка</b>" + "</td></tr>";
 			for(let i = 0; i < arr.length; i++) {
-				console.log(arr[i]);
-				ans = ans + "<tr><td>" + "<button>" + arr[i] + "</button>" + "</td></tr>";
+				const id = "bbb" + i;
+				ans = ans + "<tr><td>" + "<button id = '" + id + "' onclick = 'f(`" + id + "`)'>" + arr[i] + "</button>" + "</td></tr>";
 			}
 			ans += "</table>";
 			box.innerHTML = ans;
+		});
+	}
+
+	function f(id) {
+		const key = document.getElementById(id).innerHTML + "";
+		const obj = {
+			key: key,
+		}
+		const objString = JSON.stringify(obj);
+		const box2 = document.getElementById("box2");
+
+		sendPost("/readbase", objString, function(answer) {
+			if(answer === "ERROR") {
+				alert("Ошибка")
+			} else {
+				const objData = JSON.parse(answer);
+			    let ans = "<table border = '2px solid black'>";
+                ans +=  "<tr><td>" + "<b>ФИО</b>" + "</td><td>" + "<b>"+ key + "</b>" + "</td></tr>";
+                ans +=  "<tr><td>" + "<b>Адрес</b>" + "</td><td>" + "<b>"+ objData.adress + "</b>" + "</td></tr>";
+                ans +=  "<tr><td>" + "<b>Документы</b>" + "</td><td>";
+                if(objData.documents)
+                {
+                    if(objData.documents.passport)
+                    {
+                        ans +=  "<tr><td>" + "<b>Паспорт</b>" + "</td><td>" + "<b>"+ objData.documents.passport.ser + "</b>";
+                        ans += "<b>" + " " + objData.documents.passport.num + "</b>";
+                        ans +=  "</td></tr>";
+                    }
+                    if(objData.documents.snils)
+                    {
+                        ans +=  "<tr><td>" + "<b>Снилс</b>" + "</td><td>" + "<b>"+ objData.documents.snils + "</b>";
+                        ans +=  + "</td></tr>";
+                    }
+                }
+                ans +=  "<tr><td>" + "<b>Мать</b>" + "</td><td>" + "<b>"+ objData.mother + "</b>" + "</td></tr>";
+                ans +=  "<tr><td>" + "<b>Телефон</b>" + "</td><td>" + "<b>"+ objData.mother_phone + "</b>" + "</td></tr>";
+                ans +=  "<tr><td>" + "<b>Отец</b>" + "</td><td>" + "<b>"+ objData.father + "</b>" + "</td></tr>";
+                ans +=  "<tr><td>" + "<b>Телефон</b>" + "</td><td>" + "<b>"+ objData.father_phone + "</b>" + "</td></tr>";
+                ans += "</table>";
+                box2.innerHTML = ans;
+
+			}
 		});
 	}
 </script>
@@ -86,5 +128,7 @@
 <br>
 <br>
 <div id = "box1"></div>
+<div id = "box2"></div>
+
 </body>
 </html>

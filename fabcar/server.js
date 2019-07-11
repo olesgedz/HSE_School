@@ -9,6 +9,9 @@ console.log("Server works on port: " + port);
 app.get('/', function(req, res) {
 	res.sendfile("main.html");
 });
+app.get('/readbase', function(req, res) {
+	res.sendfile("readbase.html");
+});
 
 app.get("/watch", function(req, res) {
 	res.sendfile("keys.html");
@@ -233,7 +236,7 @@ app.post("/readbase", function(request, response) {
         console.log("Post body:");
         console.log("Key: " + bodyObj.key);
         console.log("Family: " + bodyObj.family);
-        MakeInvoke("insertFamily", [bodyObj.key], function(answer) {
+        MakeInvoke("getFamilyInfo", [bodyObj.key], function(answer) {
             console.log(answer);
             if(answer === "ERROR")  {
                 response.end("Ошибка в поиске семьи");
